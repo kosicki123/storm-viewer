@@ -18,15 +18,8 @@ class DetailViewController: UIViewController {
             self.configureView()
         }
     }
-
-    func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let imageView = self.detailImageView {
-                imageView.image = UIImage(named: detail)
-            }
-        }
-    }
+    
+    //MARK: - Lifecycle -
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -41,6 +34,25 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
+    }
+    
+    //MARK: - View Configuration -
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = self.detailItem {
+            if let imageView = self.detailImageView {
+                imageView.image = UIImage(named: detail)
+            }
+        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "shareTapped")
+    }
+    
+    //MARK: - Actions -
+    
+    func shareTapped() {
+        let activityViewController = UIActivityViewController(activityItems: [detailImageView.image!], applicationActivities: [])
+        presentViewController(activityViewController, animated: true, completion: nil)
     }
 }
 
